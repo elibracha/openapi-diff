@@ -13,7 +13,7 @@
     <packaging>jar</packaging>
 
     <name>openapi-diff</name>
-    
+
     <properties>
         <junit.jupiter.version>5.5.2</junit.jupiter.version>
         <junit.platform.version>1.3.2</junit.platform.version>
