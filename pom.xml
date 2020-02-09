@@ -23,30 +23,8 @@
         <assertj-core.version>3.14.0</assertj-core.version>
     </properties>
 
-    <url>https://github.com/elibracha/openapi-diff.git</url>
-    <inceptionYear>2020</inceptionYear>
-    <licenses>
-        <license>
-            <name>MIT License</name>
-            <url>http://opensource.org/licenses/MIT</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-
-    <scm>
-        <connection>scm:git:git@github.com:elibracha/openapi-diff.git</connection>
-        <developerConnection>scm:git:git@github.com:elibracha/openapi-diff.git</developerConnection>
-        <url>https://github.com/elibracha/openapi-diff.git/</url>
-    </scm>
 
     <build>
-        <extensions>
-            <extension>
-                <groupId>io.packagecloud.maven.wagon</groupId>
-                <artifactId>maven-packagecloud-wagon</artifactId>
-                <version>0.0.4</version>
-            </extension>
-        </extensions>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -68,17 +46,6 @@
             </plugin>
         </plugins>
     </build>
-
-    <distributionManagement>
-        <repository>
-            <id>packagecloud-travis</id>
-            <url>packagecloud+https://packagecloud.io/elibracha/openapi-diff</url>
-        </repository>
-        <snapshotRepository>
-            <id>packagecloud-travis</id>
-            <url>packagecloud+https://packagecloud.io/elibracha/openapi-diff</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <dependencies>
         <dependency>
