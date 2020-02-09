@@ -7,48 +7,12 @@
         <version>7</version>
     </parent>
 
-    <groupId>com.qdesrame</groupId>
+    <groupId>com.elibracha</groupId>
     <artifactId>openapi-diff</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>openapi-diff</name>
-    <description>Utility for comparing two OpenAPI specifications.</description>
-    <url>http://maven.apache.org</url>
-
-    <licenses>
-        <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        </license>
-    </licenses>
-
-    <developers>
-        <developer>
-            <name>qdesrame</name>
-            <email>quen2404@gmail.com</email>
-        </developer>
-    </developers>
-
-    <scm>
-        <connection>scm:git:http://github.com/quen2404/openapi-diff.git</connection>
-        <developerConnection>scm:git:http://github.com/quen2404/openapi-diff.git</developerConnection>
-        <url>https://github.com/quen2404/openapi-diff</url>
-        <tag>HEAD</tag>
-    </scm>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Sonatype Nexus snapshot repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>sonatype-nexus-staging</id>
-            <name>Sonatype Nexus release repository</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -148,12 +112,10 @@
                         <artifactId>maven-gpg-plugin</artifactId>
                         <version>1.6</version>
                         <configuration>
-                            <configuration>
                                 <gpgArguments>
                                     <arg>--pinentry-mode</arg>
                                     <arg>loopback</arg>
                                 </gpgArguments>
-                            </configuration>
                         </configuration>
                         <executions>
                             <execution>
@@ -274,37 +236,6 @@
                         <version>${junit.jupiter.version}</version>
                     </dependency>
                 </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>com.coveo</groupId>
-                <artifactId>fmt-maven-plugin</artifactId>
-                <version>2.9</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>format</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>io.github.phillipuniverse</groupId>
-                <artifactId>githook-maven-plugin</artifactId>
-                <version>1.0.4</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>install</goal>
-                        </goals>
-                        <configuration>
-                            <hooks>
-                                <pre-commit>
-                                    mvn com.coveo:fmt-maven-plugin:format
-                                </pre-commit>
-                            </hooks>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
