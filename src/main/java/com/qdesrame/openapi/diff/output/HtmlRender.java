@@ -12,6 +12,7 @@ import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import j2html.tags.ContainerTag;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -146,6 +147,12 @@ public class HtmlRender implements Render {
         ul_detail.with(
             li().with(h3("Response")).with(ul_response(changedOperation.getApiResponses())));
       }
+
+      if (changedOperation.getSecurityRequirements().isDifferent()) {
+        ul_detail.with(
+              li().with(h3("Security")).with(ul_security(changedOperation.getSecurityRequirements())));
+      }
+
       ol.with(
           li().with(span(method).withClass(method))
               .withText(pathUrl + " ")
@@ -153,6 +160,20 @@ public class HtmlRender implements Render {
               .with(ul_detail));
     }
     return ol;
+  }
+
+  private ContainerTag ul_security(ChangedSecurityRequirements apiSecurityReq) {
+    List<ChangedSecurityRequirement> changedSecurity = apiSecurityReq.getChanged();
+
+    ContainerTag ul = ul().withClass("change security");
+
+    if (changedSecurity != null) {
+      changedSecurity.forEach(
+          e -> ul.with(li_addSecurity(e))
+      );
+    }
+    return ul;
+
   }
 
   private ContainerTag ul_response(ChangedApiResponse changedApiResponse) {
@@ -170,6 +191,11 @@ public class HtmlRender implements Render {
       ul.with(li_changedResponse(propName, changedResponses.get(propName)));
     }
     return ul;
+  }
+
+  private ContainerTag li_addSecurity(ChangedSecurityRequirement requirement){
+    return li(div(String.format("changed security : New -> [%s]", requirement.getNewSecurityRequirement())).withClass("comment"))
+            .with(div(("changed security : Old -> " + requirement.getOldSecurityRequirement())).withClass("missing"));
   }
 
   private ContainerTag li_addResponse(String name, ApiResponse response) {
