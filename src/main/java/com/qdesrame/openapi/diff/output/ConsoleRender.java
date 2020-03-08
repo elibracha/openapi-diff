@@ -94,7 +94,7 @@ public class ConsoleRender implements Render {
             .append(System.lineSeparator())
             .append(ul_response(operation.getApiResponses()));
       }
-      if (operation.getSecurityRequirements().isDifferent()) {
+      if (operation.getSecurityRequirements() != null && operation.getSecurityRequirements().isDifferent()) {
         ul_detail
             .append(StringUtils.repeat(' ', 2))
             .append("Security Requirement:")

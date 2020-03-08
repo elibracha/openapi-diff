@@ -11,12 +11,9 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
-import org.openapi.diff.ignore.models.OpenApiIgnore;
 import org.openapi.diff.ignore.processors.ContextProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.naming.Context;
 
 public class Main {
 
