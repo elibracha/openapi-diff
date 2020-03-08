@@ -148,7 +148,7 @@ public class HtmlRender implements Render {
             li().with(h3("Response")).with(ul_response(changedOperation.getApiResponses())));
       }
 
-      if (changedOperation.getSecurityRequirements().isDifferent()) {
+      if (changedOperation.getSecurityRequirements() != null && changedOperation.getSecurityRequirements().isDifferent()) {
         ul_detail.with(
               li().with(h3("Security")).with(ul_security(changedOperation.getSecurityRequirements())));
       }

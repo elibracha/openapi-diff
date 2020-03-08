@@ -11,11 +11,12 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
-import org.openapi.diff.ignore.models.IgnoreOpenApi;
-import org.openapi.diff.ignore.processors.ApplyIgnorePostProcessor;
-import org.openapi.diff.ignore.processors.IgnoreProcessor;
+import org.openapi.diff.ignore.models.OpenApiIgnore;
+import org.openapi.diff.ignore.processors.ContextProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.naming.Context;
 
 public class Main {
 
@@ -165,17 +166,15 @@ public class Main {
       ChangedOpenApi result = OpenApiCompare.fromLocations(oldPath, newPath);
 
       if (line.hasOption("i")) {
-        IgnoreProcessor ignoreProcessor = null;
+        ContextProcessor contextProcessor = null;
 
         if (line.hasOption("ignore-path"))
-          ignoreProcessor = new IgnoreProcessor(line.getOptionValue("ignore-path"));
+          contextProcessor = new ContextProcessor(line.getOptionValue("ignore-path"));
         else {
-          ignoreProcessor = new IgnoreProcessor();
+          contextProcessor = new ContextProcessor();
         }
-        IgnoreOpenApi ignoreOpenApi = ignoreProcessor.processIgnore();
-        ApplyIgnorePostProcessor applyIgnorePostProcessor =
-            new ApplyIgnorePostProcessor(result, ignoreOpenApi);
-        applyIgnorePostProcessor.applyIgnore();
+
+        result = contextProcessor.process(result);
       }
 
       ConsoleRender consoleRender = new ConsoleRender();
