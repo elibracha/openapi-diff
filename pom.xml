@@ -7,7 +7,7 @@
         <version>9</version>
     </parent>
 
-    <groupId>com.elibracha</groupId>
+    <groupId>com.github.elibracha</groupId>
     <artifactId>openapi-diff</artifactId>
     <version>2.2.1-SNAPSHOT</version>
     <packaging>jar</packaging>
