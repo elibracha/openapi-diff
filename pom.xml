@@ -9,7 +9,7 @@
 
     <groupId>com.elibracha</groupId>
     <artifactId>openapi-diff</artifactId>
-    <version>2.1.1-SNAPSHOT</version>
+    <version>2.1.1</version>
     <packaging>jar</packaging>
 
     <name>openapi-diff</name>
@@ -18,7 +18,7 @@
         <connection>scm:git:git://github.com/elibracha/openapi-diff.git</connection>
         <developerConnection>scm:git:git@github.com:elibracha/openapi-diff.git</developerConnection>
         <url>https://github.com/elibracha/openapi-diff</url>
-        <tag>HEAD</tag>
+        <tag>openapi-diff-2.1.1</tag>
     </scm>
 
     <distributionManagement>
