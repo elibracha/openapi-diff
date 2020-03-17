@@ -15,7 +15,7 @@
     <name>openapi-diff</name>
 
     <scm>
-        <connection>scm:git://github.com/elibracha/openapi-diff.git</connection>
+        <connection>scm:git:git://github.com/elibracha/openapi-diff.git</connection>
         <developerConnection>scm:git:git@github.com:elibracha/openapi-diff.git</developerConnection>
         <url>https://github.com/elibracha/openapi-diff</url>
         <tag>HEAD</tag>
