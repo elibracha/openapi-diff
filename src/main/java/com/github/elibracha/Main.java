@@ -9,12 +9,12 @@ import com.github.elibracha.output.MarkdownRender;
 import java.io.File;
 import java.io.IOException;
 
+import com.github.elibracha.processors.ContextProcessor;
 import org.apache.commons.cli.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
-import org.openapi.diff.ignore.processors.ContextProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
