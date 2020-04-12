@@ -58,7 +58,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.qdesrame.openapi.diff.Main</mainClass>
+                                    <mainClass>com.github.elibracha.openapi.diff.Main</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
@@ -128,12 +128,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.3</version>
                 <configuration>
                     <localCheckout>true</localCheckout>
                     <pushChanges>false</pushChanges>
                     <mavenExecutorId>forked-path</mavenExecutorId>
-                    <!--suppress UnresolvedMavenProperty -->
                     <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
                 </configuration>
                 <dependencies>
