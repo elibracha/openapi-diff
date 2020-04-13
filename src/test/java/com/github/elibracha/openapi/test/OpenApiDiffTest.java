@@ -78,7 +78,7 @@ public class OpenApiDiffTest {
     ChangedOpenApi changedOpenApi = OpenApiCompare.fromLocations(OPENAPI_DOC1, OPENAPI_DOC2);
     List<ChangedOperation> changedEndPoints = changedOpenApi.getChangedOperations();
     String html =
-        new HtmlRender("Changelog", "http://deepoove.com/swagger-diff/stylesheets/demo.css")
+        new HtmlRender("Changelog", true)
             .render(changedOpenApi);
     try {
       FileWriter fw = new FileWriter("target/testDiff.html");

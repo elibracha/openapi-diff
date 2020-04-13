@@ -30,7 +30,12 @@ public class HtmlRender implements Render {
 
   public HtmlRender(String title, String linkCss) {
     this.title = title;
-    this.linkCss = linkCss;
+    this.linkCss =  linkCss;
+  }
+  
+  public HtmlRender(String title, boolean useLocalCss) {
+	    this.title = title;
+	    this.linkCss =  useLocalCss? getClass().getClassLoader().getResource("demo.css").getPath() : linkCss;
   }
 
   public String render(ChangedOpenApi diff) {
