@@ -21,3 +21,4 @@ target/
 .DS_Store
 /dependency-reduced-pom.xml
 /release.properties
+/pom.xml.releaseBackup
