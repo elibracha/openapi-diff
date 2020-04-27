@@ -229,7 +229,7 @@ public class Main {
           System.exit(2);
         }
       }
-      
+
       if (line.hasOption("state")) {
         System.out.println(result.isChanged().getValue());
         System.exit(0);
