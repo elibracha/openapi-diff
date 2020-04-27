@@ -2,9 +2,7 @@ package com.github.elibracha;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.elibracha.model.ChangedOpenApi;
-import com.github.elibracha.output.ConsoleRender;
-import com.github.elibracha.output.HtmlRender;
-import com.github.elibracha.output.MarkdownRender;
+import com.github.elibracha.output.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -94,6 +92,13 @@ public class Main {
             .desc("export diff as html in given file")
             .build());
     options.addOption(
+            Option.builder()
+                    .longOpt("json")
+                    .hasArg()
+                    .argName("file")
+                    .desc("export diff as json in given file")
+                    .build());
+    options.addOption(
         Option.builder("i")
             .valueSeparator()
             .type(Boolean.class)
@@ -182,10 +187,13 @@ public class Main {
       if (!logLevel.equals("OFF")) {
         System.out.println(consoleRender.render(result));
       }
-      HtmlRender htmlRender = new HtmlRender();
-      MarkdownRender mdRender = new MarkdownRender();
+      Render htmlRender = new HtmlRender();
+      Render mdRender = new MarkdownRender();
+      Render jsonRender = new JsonRender();
+
       String output = null;
       String outputFile = null;
+
       if (line.hasOption("html")) {
         output = htmlRender.render(result);
         outputFile = line.getOptionValue("html");
@@ -194,6 +202,11 @@ public class Main {
         output = mdRender.render(result);
         outputFile = line.getOptionValue("markdown");
       }
+      if (line.hasOption("json")) {
+        output = jsonRender.render(result);
+        outputFile = line.getOptionValue("json");
+      }
+
       if (line.hasOption("output")) {
         String[] outputValues = line.getOptionValues("output");
         if (outputValues[0].equalsIgnoreCase("markdown")) {
@@ -205,6 +218,7 @@ public class Main {
         }
         outputFile = outputValues[1];
       }
+
       if (output != null && outputFile != null) {
         File file = new File(outputFile);
         logger.debug("Output file: {}", file.getAbsolutePath());
@@ -215,6 +229,7 @@ public class Main {
           System.exit(2);
         }
       }
+      
       if (line.hasOption("state")) {
         System.out.println(result.isChanged().getValue());
         System.exit(0);
