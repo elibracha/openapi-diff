@@ -4,12 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.elibracha.model.ChangedOpenApi;
 import com.github.elibracha.output.ConsoleRender;
 import com.github.elibracha.output.HtmlRender;
+import com.github.elibracha.output.JsonRender;
 import com.github.elibracha.output.MarkdownRender;
 
 import java.io.File;
 import java.io.IOException;
 
 import com.github.elibracha.processors.ContextProcessor;
+import io.swagger.v3.core.util.Json;
 import org.apache.commons.cli.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -184,6 +186,7 @@ public class Main {
       }
       HtmlRender htmlRender = new HtmlRender();
       MarkdownRender mdRender = new MarkdownRender();
+      JsonRender jsonRender=new JsonRender();
       String output = null;
       String outputFile = null;
       if (line.hasOption("html")) {
@@ -194,12 +197,19 @@ public class Main {
         output = mdRender.render(result);
         outputFile = line.getOptionValue("markdown");
       }
+      if (line.hasOption("json")) {
+        output = mdRender.render(result);
+        outputFile = line.getOptionValue("json");
+      }
+
       if (line.hasOption("output")) {
         String[] outputValues = line.getOptionValues("output");
         if (outputValues[0].equalsIgnoreCase("markdown")) {
           output = mdRender.render(result);
         } else if (outputValues[0].equalsIgnoreCase("html")) {
           output = htmlRender.render(result);
+        } else  if (outputValues[0].equalsIgnoreCase("json")) {
+          output = jsonRender.render(result);
         } else {
           throw new ParseException("Invalid output format");
         }
