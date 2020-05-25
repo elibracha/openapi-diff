@@ -47,7 +47,7 @@ paths:
                 type: object
                 additionalProperties:
                   $ref: '#/components/schemas/Inventory'
-                  x-key-property :
+                  x-key-property:
                     $ref: '#/components/schemas/InvStatus'
 externalDocs:
   description: Find out more about Swagger

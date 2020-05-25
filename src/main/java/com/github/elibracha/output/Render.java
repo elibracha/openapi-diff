@@ -5,5 +5,5 @@ import com.github.elibracha.model.ChangedOpenApi;
 
 public interface Render {
 
-  String render(ChangedOpenApi diff) throws JsonProcessingException;
+    String render(ChangedOpenApi diff) throws JsonProcessingException;
 }

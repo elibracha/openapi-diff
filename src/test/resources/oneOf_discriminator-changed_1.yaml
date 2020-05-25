@@ -10,16 +10,16 @@ paths:
       operationId: update
       requestBody:
         content:
-            application/json:
-              schema:
-                oneOf:
-                  - $ref: '#/components/schemas/A'
-                  - $ref: '#/components/schemas/B'
-                discriminator:
-                  propertyName: realtype
-                  mapping:
-                    a-type: '#/components/schemas/A'
-                    b-type: '#/components/schemas/B'
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/A'
+                - $ref: '#/components/schemas/B'
+              discriminator:
+                propertyName: realtype
+                mapping:
+                  a-type: '#/components/schemas/A'
+                  b-type: '#/components/schemas/B'
         required: true
       responses:
         '201':

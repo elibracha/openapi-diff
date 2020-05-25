@@ -94,7 +94,7 @@ components:
     Pet:
       type: object
       required:
-      - pet_type
+        - pet_type
       properties:
         pet_type:
           type: string
@@ -122,9 +122,9 @@ components:
 
     MyResponseType:
       oneOf:
-      - $ref: '#/components/schemas/Cat'
-      - $ref: '#/components/schemas/Dog'
-      - $ref: '#/components/schemas/Lizard'
+        - $ref: '#/components/schemas/Cat'
+        - $ref: '#/components/schemas/Dog'
+        - $ref: '#/components/schemas/Lizard'
       discriminator:
         propertyName: pet_type
         mapping:

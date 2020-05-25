@@ -93,19 +93,19 @@ components:
     Pet:
       type: object
       required:
-      - pet_type
+        - pet_type
       properties:
         pet_type:
           type: string
       oneOf:
-      - $ref: '#/components/schemas/Cat'
-      - $ref: '#/components/schemas/Dog'
-      - $ref: '#/components/schemas/Lizard'
+        - $ref: '#/components/schemas/Cat'
+        - $ref: '#/components/schemas/Dog'
+        - $ref: '#/components/schemas/Lizard'
       discriminator:
         propertyName: pet_type
     Cat:
       allOf:
-      - $ref: '#/components/schemas/Pet'
+        - $ref: '#/components/schemas/Pet'
       # all other properties specific to a `Cat`
       type: object
       properties:
@@ -113,7 +113,7 @@ components:
           type: string
     Dog:
       allOf:
-      - $ref: '#/components/schemas/Pet'
+        - $ref: '#/components/schemas/Pet'
       # all other properties specific to a `Dog`
       type: object
       properties:
@@ -121,7 +121,7 @@ components:
           type: string
     Lizard:
       allOf:
-      - $ref: '#/components/schemas/Pet'
+        - $ref: '#/components/schemas/Pet'
       # all other properties specific to a `Lizard`
       type: object
       properties:

@@ -70,11 +70,11 @@ paths:
         '404':
           description: Pet not found
       security:
-      - tenant: []
-        user: []
-      - petstore_auth:
-        - 'write:pets'
-        - 'read:pets'
+        - tenant: []
+          user: []
+        - petstore_auth:
+            - 'write:pets'
+            - 'read:pets'
   /pet:
     post:
       tags:
@@ -100,9 +100,9 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/Pet'
       security:
-      - petstore_auth2:
-        - 'write:pets'
-        - 'read:pets'
+        - petstore_auth2:
+            - 'write:pets'
+            - 'read:pets'
   /pet3:
     post:
       tags:
@@ -116,9 +116,9 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/Pet'
       security:
-      - petstore_auth3:
-        - 'write:pets'
-        - 'read:pets'
+        - petstore_auth3:
+            - 'write:pets'
+            - 'read:pets'
   /pet/findByStatus2:
     get:
       tags:
@@ -143,11 +143,11 @@ paths:
                 - sold
               default: available
       security:
-      - tenant: []
-        user: []
-      - petstore_auth:
-        - 'write:pets'
-        - 'read:pets'
+        - tenant: []
+          user: []
+        - petstore_auth:
+            - 'write:pets'
+            - 'read:pets'
       responses:
         '200':
           description: successful operation

@@ -98,7 +98,7 @@ components:
     Pet:
       type: object
       required:
-      - pet_type
+        - pet_type
       properties:
         pet_type:
           nullable: false
@@ -107,7 +107,7 @@ components:
       description: Cat class
       type: object
       required:
-      - pet_type
+        - pet_type
       properties:
         pet_type:
           type: string
@@ -118,7 +118,7 @@ components:
     Dog:
       description: Dog class
       allOf:
-      - $ref: '#/components/schemas/Pet'
+        - $ref: '#/components/schemas/Pet'
       type: object
       properties:
         bark:
