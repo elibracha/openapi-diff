@@ -3,6 +3,9 @@ package com.github.elibracha.openapi.test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.slf4j.LoggerFactory.getLogger;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.elibracha.output.JsonRender;
+import io.swagger.v3.core.util.Json;
 import org.slf4j.Logger;
 
 import com.github.elibracha.OpenApiCompare;

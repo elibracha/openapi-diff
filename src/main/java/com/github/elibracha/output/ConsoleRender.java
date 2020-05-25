@@ -71,18 +71,31 @@ public class ConsoleRender implements Render {
       String desc =
           Optional.ofNullable(operation.getSummary()).map(ChangedMetadata::getRight).orElse("");
 
+
       StringBuilder ul_detail = new StringBuilder();
+
       if (Changed.result(operation.getParameters()).isDifferent()) {
+
         ul_detail
+
             .append(StringUtils.repeat(' ', 2))
+
             .append("Parameter:")
+
             .append(System.lineSeparator())
+
             .append(ul_param(operation.getParameters()));
+
       }
+
       if (operation.resultRequestBody().isDifferent()) {
+
         ul_detail
+
             .append(StringUtils.repeat(' ', 2))
+
             .append("Request:")
+
             .append(System.lineSeparator())
             .append(ul_content(operation.getRequestBody().getContent(), true));
       }
