@@ -2,6 +2,7 @@ package com.github.elibracha;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.elibracha.model.ChangedOpenApi;
+
 import com.github.elibracha.output.ConsoleRender;
 import com.github.elibracha.output.HtmlRender;
 import com.github.elibracha.output.JsonRender;
@@ -96,6 +97,13 @@ public class Main {
             .desc("export diff as html in given file")
             .build());
     options.addOption(
+            Option.builder()
+                    .longOpt("json")
+                    .hasArg()
+                    .argName("file")
+                    .desc("export diff as json in given file")
+                    .build());
+    options.addOption(
         Option.builder("i")
             .valueSeparator()
             .type(Boolean.class)
@@ -187,8 +195,10 @@ public class Main {
       HtmlRender htmlRender = new HtmlRender();
       MarkdownRender mdRender = new MarkdownRender();
       JsonRender jsonRender=new JsonRender();
+
       String output = null;
       String outputFile = null;
+
       if (line.hasOption("html")) {
         output = htmlRender.render(result);
         outputFile = line.getOptionValue("html");
@@ -198,7 +208,7 @@ public class Main {
         outputFile = line.getOptionValue("markdown");
       }
       if (line.hasOption("json")) {
-        output = mdRender.render(result);
+        output = jsonRender.render(result);
         outputFile = line.getOptionValue("json");
       }
 
@@ -215,6 +225,7 @@ public class Main {
         }
         outputFile = outputValues[1];
       }
+
       if (output != null && outputFile != null) {
         File file = new File(outputFile);
         logger.debug("Output file: {}", file.getAbsolutePath());
@@ -225,6 +236,7 @@ public class Main {
           System.exit(2);
         }
       }
+
       if (line.hasOption("state")) {
         System.out.println(result.isChanged().getValue());
         System.exit(0);
