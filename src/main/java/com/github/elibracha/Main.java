@@ -76,7 +76,7 @@ public class Main {
                         .numberOfArgs(2)
                         .valueSeparator()
                         .argName("format=file")
-                        .desc("use given format (html, markdown) for output in file")
+                        .desc("use given format (html, markdown, json) for output in file")
                         .build());
         options.addOption(
                 Option.builder()
@@ -95,9 +95,8 @@ public class Main {
         options.addOption(
                 Option.builder()
                         .longOpt("json")
-                        .hasArg()
-                        .argName("file")
-                        .desc("export diff as json in given file")
+//                        .hasArg()
+                        .desc("print the result as json")
                         .build());
         options.addOption(
                 Option.builder("i")
@@ -113,7 +112,7 @@ public class Main {
                         .argName("file")
                         .desc("path to diff ignore file")
                         .build());
-
+        Boolean toSaveToFile=true;
         final String message = "Hello logging!";
         // create the parser
         CommandLineParser parser = new DefaultParser();
@@ -205,6 +204,7 @@ public class Main {
             if (line.hasOption("json")) {
                 output = jsonRender.render(result);
                 outputFile = line.getOptionValue("json");
+                System.out.println(output);
             }
 
             if (line.hasOption("output")) {
@@ -215,13 +215,17 @@ public class Main {
                     output = htmlRender.render(result);
                 } else if (outputValues[0].equalsIgnoreCase("json")) {
                     output = jsonRender.render(result);
+                    System.out.print(output);
                 } else {
                     throw new ParseException("Invalid output format");
                 }
-                outputFile = outputValues[1];
+                if (toSaveToFile) {
+                    System.out.println("0"+ outputValues[0]);
+                    System.out.println("1"+ outputValues[1]);
+                    outputFile = outputValues[1] + "." + outputValues[0];
+                }
             }
-
-            if (output != null && outputFile != null) {
+            if (output != null && outputFile != null && toSaveToFile) {
                 File file = new File(outputFile);
                 logger.debug("Output file: {}", file.getAbsolutePath());
                 try {
