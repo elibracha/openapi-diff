@@ -125,7 +125,7 @@ public class Main {
                 System.exit(0);
             }
             String logLevel = "ERROR";
-            if (line.hasOption("off")) {
+            if (line.hasOption("off") || (line.hasOption("json"))) {
                 logLevel = "OFF";
             }
             if (line.hasOption("error")) {
@@ -247,10 +247,7 @@ public class Main {
             System.exit(2);
         } catch (Exception e) {
             System.err.println(
-                    "Unexpected exception. Reason: "
-                            + e.getMessage()
-                            + "\n"
-                            + ExceptionUtils.getStackTrace(e));
+                    "Error: " + e.getMessage());
             System.exit(2);
         }
     }

@@ -1,5 +1,6 @@
 package com.github.elibracha.output;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -12,7 +13,10 @@ public class JsonRender implements Render {
     @Override
     public String render(ChangedOpenApi diff) throws JsonProcessingException {
         this.diff = diff;
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter().withoutAttribute("changedElements");
+
         String json = ow.writeValueAsString(diff);
         return json;
 

@@ -19,6 +19,6 @@ public class PathDiffTest {
     @Test
     public void testMultiplePathWithSameSignature() {
         assertThrows(
-                IllegalArgumentException.class, () -> assertOpenApiAreEquals(OPENAPI_PATH3, OPENAPI_PATH3));
+                IllegalArgumentException.class, () -> assertOpenApiAreEquals(OPENAPI_PATH1, OPENAPI_PATH3));
     }
 }
