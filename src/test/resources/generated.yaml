@@ -113,7 +113,7 @@ paths:
         - petstore_auth:
             - 'write:pets'
             - 'read:pets'
-  /pet/findByStatus:
+  /pet/findBySta:
     get:
       tags:
         - pet

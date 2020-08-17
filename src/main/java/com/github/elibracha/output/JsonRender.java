@@ -19,7 +19,6 @@ public class JsonRender implements Render {
 
         String json = ow.writeValueAsString(diff);
         return json;
-
     }
 
 }
