@@ -1,10 +1,8 @@
 package com.github.elibracha;
 
 import com.github.elibracha.model.ChangedOpenApi;
-import com.github.elibracha.output.ConsoleRender;
-import com.github.elibracha.output.HtmlRender;
-import com.github.elibracha.output.JsonRender;
-import com.github.elibracha.output.MarkdownRender;
+import com.github.elibracha.model.ChangedOpenApiRenderList;
+import com.github.elibracha.output.*;
 import com.github.elibracha.processors.ContextProcessor;
 import org.apache.commons.cli.*;
 import org.apache.commons.io.FileUtils;
@@ -22,6 +20,7 @@ public class Main {
     static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String... args) {
+        Boolean isObject=false;
         Options options = new Options();
         options.addOption(Option.builder("h").longOpt("help").desc("print this message").build());
         options.addOption(
@@ -44,6 +43,7 @@ public class Main {
         options.addOption(Option.builder().longOpt("warn").desc("Print warning information").build());
         options.addOption(Option.builder().longOpt("error").desc("Print error information").build());
         options.addOption(Option.builder().longOpt("off").desc("No information printed").build());
+        options.addOption(Option.builder().longOpt("object").desc("print summary object as json").build());
         options.addOption(
                 Option.builder("l")
                         .longOpt("log")
@@ -69,15 +69,15 @@ public class Main {
                         .argName("property=value")
                         .desc("use query param for authorisation")
                         .build());
-        options.addOption(
-                Option.builder("o")
-                        .longOpt("output")
-                        .hasArgs()
-                        .numberOfArgs(2)
-                        .valueSeparator()
-                        .argName("format=file")
-                        .desc("use given format (html, markdown) for output in file")
-                        .build());
+//        options.addOption(
+//                Option.builder("o")
+//                        .longOpt("output")
+//                        .hasArgs()
+//                        .numberOfArgs(2)
+//                        .valueSeparator()
+//                        .argName("format=file")
+//                        .desc("use given format (html, markdown) for output in file")
+//                        .build());
         options.addOption(
                 Option.builder()
                         .longOpt("markdown")
@@ -100,6 +100,11 @@ public class Main {
                         .desc("export diff as json in given file")
                         .build());
         options.addOption(
+                Option.builder()
+                        .longOpt("object")
+                        .desc("export summary object as a json file")
+                        .build());
+        options.addOption(
                 Option.builder("i")
                         .valueSeparator()
                         .type(Boolean.class)
@@ -113,8 +118,6 @@ public class Main {
                         .argName("file")
                         .desc("path to diff ignore file")
                         .build());
-
-        final String message = "Hello logging!";
         // create the parser
         CommandLineParser parser = new DefaultParser();
         try {
@@ -125,7 +128,7 @@ public class Main {
                 System.exit(0);
             }
             String logLevel = "ERROR";
-            if (line.hasOption("off")) {
+            if (line.hasOption("off") || (line.hasOption("json")) || (line.hasOption("object"))) {
                 logLevel = "OFF";
             }
             if (line.hasOption("error")) {
@@ -142,6 +145,9 @@ public class Main {
             }
             if (line.hasOption("trace")) {
                 logLevel = "TRACE";
+            }
+            if (line.hasOption("object")) {
+                isObject=true;
             }
             if (line.hasOption("log")) {
                 logLevel = line.getOptionValue("log");
@@ -161,16 +167,14 @@ public class Main {
                 logLevel = "OFF";
             }
             LogManager.getRootLogger().setLevel(Level.toLevel(logLevel));
-
-            if (line.getArgList().size() < 2) {
-                throw new ParseException("Missing arguments");
-            }
-
+                 if (line.getArgList().size() < 2) { //   && (!(isObject)))
+                     throw new ParseException("Missing arguments");
+                 }
             String oldPath = line.getArgList().get(0);
             String newPath = line.getArgList().get(1);
 
             ChangedOpenApi result = OpenApiCompare.fromLocations(oldPath, newPath);
-
+            ChangedOpenApiRenderList changedOpenApiRenderList=new ChangedOpenApiRenderList(result);
             if (line.hasOption("i")) {
                 ContextProcessor contextProcessor = null;
 
@@ -190,6 +194,7 @@ public class Main {
             HtmlRender htmlRender = new HtmlRender();
             MarkdownRender mdRender = new MarkdownRender();
             JsonRender jsonRender = new JsonRender();
+            SumJsonRender sumJsonRender=new SumJsonRender();
 
             String output = null;
             String outputFile = null;
@@ -206,6 +211,11 @@ public class Main {
                 output = jsonRender.render(result);
                 outputFile = line.getOptionValue("json");
             }
+            if (line.hasOption("object")) {
+                output = sumJsonRender.render(changedOpenApiRenderList);
+                outputFile = line.getOptionValue("object");
+                System.out.println(output);
+            }
 
             if (line.hasOption("output")) {
                 String[] outputValues = line.getOptionValues("output");
@@ -215,6 +225,8 @@ public class Main {
                     output = htmlRender.render(result);
                 } else if (outputValues[0].equalsIgnoreCase("json")) {
                     output = jsonRender.render(result);
+                } else if (outputValues[0].equalsIgnoreCase("object")) {
+                    output = sumJsonRender.render(changedOpenApiRenderList);
                 } else {
                     throw new ParseException("Invalid output format");
                 }
@@ -247,10 +259,7 @@ public class Main {
             System.exit(2);
         } catch (Exception e) {
             System.err.println(
-                    "Unexpected exception. Reason: "
-                            + e.getMessage()
-                            + "\n"
-                            + ExceptionUtils.getStackTrace(e));
+                    "Error: " + e.getMessage());
             System.exit(2);
         }
     }

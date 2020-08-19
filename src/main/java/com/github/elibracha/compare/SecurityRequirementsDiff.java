@@ -15,7 +15,9 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -47,18 +49,10 @@ public class SecurityRequirementsDiff {
     }
 
     public boolean same(SecurityRequirement left, SecurityRequirement right) {
-        //        List<SecurityScheme.Type> leftTypes = left.keySet().stream()
-        //                .map(x -> leftComponents.getSecuritySchemes().get(x).getType())
-        //                .collect(Collectors.toList());
-        //        List<SecurityScheme.Type> rightTypes = right.keySet().stream()
-        //                .map(x -> rightComponents.getSecuritySchemes().get(x).getType())
-        //                .collect(Collectors.toList());
-        //
         List<Pair<SecurityScheme.Type, SecurityScheme.In>> leftTypes =
                 getListOfSecuritySchemes(leftComponents, left);
         List<Pair<SecurityScheme.Type, SecurityScheme.In>> rightTypes =
                 getListOfSecuritySchemes(rightComponents, right);
-
         return CollectionUtils.isEqualCollection(leftTypes, rightTypes);
     }
 
@@ -67,11 +61,14 @@ public class SecurityRequirementsDiff {
         return securityRequirement.keySet().stream()
                 .map(
                         x -> {
-                            SecurityScheme result = components.getSecuritySchemes().get(x);
-                            if (result == null) {
-                                throw new IllegalArgumentException("Impossible to find security scheme: " + x);
-                            }
-                            return result;
+                            Supplier<IllegalArgumentException> s = () -> new IllegalArgumentException("Impossible to find security scheme: " + x);
+                            //SecurityScheme result = components.getSecuritySchemes().get(x);
+                            Map<String, SecurityScheme> map =
+                                    Optional.ofNullable(components.getSecuritySchemes())
+                                    .orElseThrow(s);
+
+                            return Optional.ofNullable(map.get(x))
+                                    .orElseThrow(s);
                         })
                 .map(this::getPair)
                 .distinct()

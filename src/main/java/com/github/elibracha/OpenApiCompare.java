@@ -52,7 +52,7 @@ public class OpenApiCompare {
 
     private static OpenAPI notNull(OpenAPI spec, String type) {
         if (spec == null) {
-            throw new RuntimeException(String.format("Cannot read %s OpenAPI spec", type));
+            throw new RuntimeException(String.format("Malformed file: cant read %s file", type));
         }
         return spec;
     }
