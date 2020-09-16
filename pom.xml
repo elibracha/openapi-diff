@@ -202,7 +202,7 @@
         <dependency>
             <groupId>com.github.elibracha</groupId>
             <artifactId>openapi-diff-commons</artifactId>
-            <version>1.0.5</version>
+            <version>1.0.42</version>
         </dependency>
         <dependency>
             <groupId>com.github.elibracha</groupId>
